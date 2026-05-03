@@ -1,0 +1,659 @@
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python inference/sequential.py     =======================================================
+SEQUENTIAL INFERENCE BASELINE
+(OMP_NUM_THREADS=1, single process)
+=======================================================
+
+=======================================================
+STEP 1 — Loading model and data
+=======================================================
+  Loading model from: model\saved
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 3933.53it/s]
+  Model loaded. Labels: ['O', 'B-LOC', 'B-MISC', 'B-ORG', 'B-PER', 'I-LOC', 'I-MISC', 'I-ORG', 'I-PER']
+  Test sentences loaded: 1165
+
+  Threads (PyTorch) : 1
+  OMP_NUM_THREADS   : 1
+  Device            : cpu
+
+=======================================================
+STEP 2 — Measuring memory before inference
+=======================================================
+  Memory usage: 456.52 MB
+
+=======================================================
+STEP 3 — Running sequential inference
+=======================================================
+  Processing 1165 documents one at a time...
+  Each document through full NER pipeline:
+  tokenize → forward pass → decode
+
+    Processed 1100/1165 | Elapsed: 66.9s | Avg latency: 60.8ms
+    Done. Total time: 70.67s
+
+=======================================================
+STEP 4 — Computing timing statistics
+=======================================================
+
+=======================================================
+STEP 5 — Computing NER accuracy
+=======================================================
+
+=======================================================
+SEQUENTIAL BASELINE RESULTS
+=======================================================
+
+  ── Timing ──
+  Total time        : 70.67 s
+  Documents         : 1165
+  Throughput        : 16.48 docs/sec
+  Avg latency       : 60.65 ms/doc
+  Median latency    : 46.89 ms/doc
+  Std deviation     : 51.69 ms
+  P95 latency       : 143.17 ms
+  P99 latency       : 230.47 ms
+
+  ── Memory ──
+  Before inference  : 456.52 MB
+  After inference   : 652.76 MB
+  Delta             : 196.24 MB
+
+  ── NER Accuracy ──
+  F1 Score          : 0.9109
+  Precision         : 0.9161
+  Recall            : 0.9058
+
+── Per-class Report ──
+
+              precision    recall  f1-score   support
+
+         LOC     0.9601    0.9479    0.9539       710
+        MISC     0.7647    0.7514    0.7580       173
+         ORG     0.8985    0.9030    0.9007       402
+         PER     0.9200    0.9020    0.9109       510
+
+   micro avg     0.9161    0.9058    0.9109      1795
+   macro avg     0.8858    0.8761    0.8809      1795
+weighted avg     0.9161    0.9058    0.9109      1795
+
+
+  Results saved → results\sequential_results.json
+  NOTE: Keep this file — parallel scripts
+        read it to compute speedup ratios.
+
+=======================================================
+BASELINE COMPLETE
+
+  Sequential baseline recorded.
+
+  Key numbers for your report:
+    Total time   : 70.6717 s
+    Throughput   : 16.4847 docs/sec
+    Avg latency  : 60.6531 ms/doc
+    Test F1      : 0.9109
+
+  Next steps:
+    python inference/naive_parallel.py    (2 workers, then 4)
+    python inference/cache_aware.py       (2 workers, then 4)
+    
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python inference/naive_parallel.py --workers 2
+=======================================================
+NAIVE PARALLEL INFERENCE (2 workers)
+(No length ordering — documents in original order)
+=======================================================
+
+=======================================================
+STEP 1 — Loading data and baseline
+=======================================================
+  Test sentences : 1165
+  Baseline time  : 70.6717 s
+
+=======================================================
+STEP 2 — Running naive parallel inference
+=======================================================
+  Strategy: split corpus into 2 equal chunks
+  No sorting — documents in original order
+
+  Launching 2 workers...
+  Worker 0: 583 documents (indices 0–582)
+  Worker 1: 582 documents (indices 583–1164)
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 1794.23it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 3299.29it/s]
+
+=======================================================
+STEP 3 — Computing metrics
+=======================================================
+
+=======================================================
+NAIVE PARALLEL RESULTS (2 workers)
+=======================================================
+
+  ── Timing ──
+  Wall time         : 69.57 s
+  Documents         : 1165
+  Throughput        : 16.75 docs/sec
+  Avg latency       : 68.29 ms/doc
+
+  ── Speedup vs Sequential ──
+  Sequential time   : 70.67 s
+  Parallel time     : 69.57 s
+  Speedup           : 1.0158x
+  Parallel efficiency: 50.79%
+
+  ── Amdahl's Law ──
+  Parallelizable fraction (p): 0.0311
+  Theoretical max speedup    : 1.0321x (infinite threads)
+  Theoretical speedup @ 2    : 1.0158x
+  Theoretical speedup @ 4    : 1.0239x
+  Theoretical speedup @ 8    : 1.0280x
+
+  ── Worker Load Balance ──
+  Worker   Docs     Total ms     Mean ms      Max ms    
+  ────────────────────────────────────────────────────
+  0        583      43452.79     74.53        2048.42   
+  1        582      36102.72     62.03        297.1     
+
+  Load imbalance    : 7350.07 ms
+  (difference between slowest and fastest worker)
+  NOTE: Cache-aware parallel will reduce this.
+
+  ── NER Accuracy ──
+  F1 Score          : 0.9109
+  Precision         : 0.9161
+  Recall            : 0.9058
+
+── Per-class Report ──
+
+              precision    recall  f1-score   support
+
+         LOC     0.9601    0.9479    0.9539       710
+        MISC     0.7647    0.7514    0.7580       173
+         ORG     0.8985    0.9030    0.9007       402
+         PER     0.9200    0.9020    0.9109       510
+
+   micro avg     0.9161    0.9058    0.9109      1795
+   macro avg     0.8858    0.8761    0.8809      1795
+weighted avg     0.9161    0.9058    0.9109      1795
+
+
+=======================================================
+DONE
+=======================================================
+
+  Run again with more workers:
+    python inference/naive_parallel.py --workers 4
+
+  Then run cache-aware:
+    python inference/cache_aware.py --workers 2
+    python inference/cache_aware.py --workers 4
+    
+(venv) PS C:\Users\yousu\Downloads\PDCProject> 
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python inference/naive_parallel.py --workers 4
+=======================================================
+NAIVE PARALLEL INFERENCE (4 workers)
+(No length ordering — documents in original order)
+=======================================================
+
+=======================================================
+STEP 1 — Loading data and baseline
+=======================================================
+  Test sentences : 1165
+  Baseline time  : 70.6717 s
+
+=======================================================
+STEP 2 — Running naive parallel inference
+=======================================================
+  Strategy: split corpus into 4 equal chunks
+  No sorting — documents in original order
+
+  Launching 4 workers...
+  Worker 0: 292 documents (indices 0–291)
+  Worker 1: 292 documents (indices 292–583)
+  Worker 2: 292 documents (indices 584–875)
+  Worker 3: 289 documents (indices 876–1164)
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2223.36it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2622.40it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2621.54it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 9299.40it/s]
+
+=======================================================
+STEP 3 — Computing metrics
+=======================================================
+
+=======================================================
+NAIVE PARALLEL RESULTS (4 workers)
+=======================================================
+
+  ── Timing ──
+  Wall time         : 81.08 s
+  Documents         : 1165
+  Throughput        : 14.37 docs/sec
+  Avg latency       : 74.41 ms/doc
+
+  ── Speedup vs Sequential ──
+  Sequential time   : 70.67 s
+  Parallel time     : 81.08 s
+  Speedup           : 0.8716x
+  Parallel efficiency: 21.79%
+
+  ── Worker Load Balance ──
+  Worker   Docs     Total ms     Mean ms      Max ms    
+  ────────────────────────────────────────────────────
+  0        292      25511.57     87.37        1642.65   
+  1        292      23674.98     81.08        475.15    
+  2        292      21233.94     72.72        574.05    
+  3        289      16270.97     56.3         277.79    
+
+  Load imbalance    : 9240.60 ms
+  (difference between slowest and fastest worker)
+  NOTE: Cache-aware parallel will reduce this.
+
+  ── NER Accuracy ──
+  F1 Score          : 0.9109
+  Precision         : 0.9161
+  Recall            : 0.9058
+
+── Per-class Report ──
+
+              precision    recall  f1-score   support
+
+         LOC     0.9601    0.9479    0.9539       710
+        MISC     0.7647    0.7514    0.7580       173
+         ORG     0.8985    0.9030    0.9007       402
+         PER     0.9200    0.9020    0.9109       510
+
+   micro avg     0.9161    0.9058    0.9109      1795
+   macro avg     0.8858    0.8761    0.8809      1795
+weighted avg     0.9161    0.9058    0.9109      1795
+
+
+=======================================================
+DONE
+=======================================================
+
+  Run again with more workers:
+    python inference/naive_parallel.py --workers 4
+
+  Then run cache-aware:
+    python inference/cache_aware.py --workers 2
+    python inference/cache_aware.py --workers 4
+    
+(venv) PS C:\Users\yousu\Downloads\PDCProject> 
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python inference/cache_aware.py --workers 2   
+=======================================================
+CACHE-AWARE PARALLEL INFERENCE (2 workers)
+(Length-sorted documents — homogeneous batches)
+=======================================================
+
+=======================================================
+STEP 1 — Loading data and baselines
+=======================================================
+  Test sentences : 1165
+  Sequential baseline : 70.6717 s
+  Naive parallel (2w): 69.5721 s
+
+=======================================================
+STEP 2 — Sorting corpus by document length
+(This is the cache-aware scheduling step)
+=======================================================
+  Corpus length stats:
+  Min : 1 tokens
+  Max : 99 tokens
+  Mean: 8.0 tokens
+  Std : 11.4 tokens
+
+=======================================================
+STEP 3 — Running cache-aware parallel inference
+=======================================================
+
+  Length distribution across workers (after sorting):
+  Worker   Docs     Min len    Max len    Mean len  
+  ──────────────────────────────────────────────────
+  0        583      1          4          3.2       
+  1        582      4          99         12.8      
+
+  Max length spread within any worker: 95
+  (compare to full corpus spread: 98)
+
+  Launching 2 workers...
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2764.14it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2622.39it/s]
+
+=======================================================
+STEP 4 — Computing metrics
+=======================================================
+
+=======================================================
+CACHE-AWARE PARALLEL RESULTS (2 workers)
+=======================================================
+
+  ── Timing ──
+  Wall time         : 65.07 s
+  Throughput        : 17.90 docs/sec
+  Avg latency       : 58.91 ms/doc
+  Latency std dev   : 26.13 ms
+
+  ── Three-Way Comparison ──
+  Config                    Time (s)     Speedup vs Seq     Throughput
+  ────────────────────────────────────────────────────────────────────
+  Sequential                70.67        1.0000x            16.48 docs/s
+  Naive parallel            69.57        1.0158             16.75 docs/s
+  Cache-aware parallel      65.07        1.086x             17.90 docs/s
+
+  Cache-aware vs naive speedup : 1.0692x
+  Cache-aware parallel efficiency: 54.30%
+
+  ── Amdahl's Law (cache-aware) ──
+  Parallelizable fraction (p): 0.1584
+  Theoretical speedup @ 2   : 1.0860x
+  Theoretical speedup @ 4   : 1.1348x
+  Theoretical speedup @ 8   : 1.1609x
+  Theoretical speedup @16   : 1.1744x
+
+  ── Worker Load Balance (cache-aware) ──
+  Worker   Docs   Len range          Total ms     Mean ms      Max ms
+  ────────────────────────────────────────────────────────────────────
+  0        583    1–4                29284.93     50.23        143.53
+  1        582    4–99               39349.6      67.61        227.61
+
+  Load imbalance (cache-aware) : 10064.67 ms
+  Load imbalance (naive)       : 7350.07 ms
+  Imbalance reduction          : -36.93%
+
+  ── NER Accuracy ──
+  F1        : 0.9109
+  Precision : 0.9161
+  Recall    : 0.9058
+
+── Per-class Report ──
+
+              precision    recall  f1-score   support
+
+         LOC     0.9601    0.9479    0.9539       710
+        MISC     0.7647    0.7514    0.7580       173
+         ORG     0.8985    0.9030    0.9007       402
+         PER     0.9200    0.9020    0.9109       510
+
+   micro avg     0.9161    0.9058    0.9109      1795
+   macro avg     0.8858    0.8761    0.8809      1795
+weighted avg     0.9161    0.9058    0.9109      1795
+
+  Results saved → results\cache_aware_2.json
+
+=======================================================
+DONE
+=======================================================
+
+  Run with 4 workers too:
+    python inference/cache_aware.py --workers 4
+
+  Then generate final comparison:
+    python evaluation/compare_all.py
+    
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python inference/cache_aware.py --workers 4
+=======================================================
+CACHE-AWARE PARALLEL INFERENCE (4 workers)
+(Length-sorted documents — homogeneous batches)
+=======================================================
+
+=======================================================
+STEP 1 — Loading data and baselines
+=======================================================
+  Test sentences : 1165
+  Sequential baseline : 70.6717 s
+  Naive parallel (4w): 81.0847 s
+
+=======================================================
+STEP 2 — Sorting corpus by document length
+(This is the cache-aware scheduling step)
+=======================================================
+  Corpus length stats:
+  Min : 1 tokens
+  Max : 99 tokens
+  Mean: 8.0 tokens
+  Std : 11.4 tokens
+
+=======================================================
+STEP 3 — Running cache-aware parallel inference
+=======================================================
+
+  Length distribution across workers (after sorting):
+  Worker   Docs     Min len    Max len    Mean len  
+  ──────────────────────────────────────────────────
+  0        292      1          3          2.8       
+  1        292      3          4          3.7       
+  2        292      4          6          4.5       
+  3        289      6          99         21.1      
+
+  Max length spread within any worker: 93
+  (compare to full corpus spread: 98)
+
+  Launching 4 workers...
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 3008.09it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2764.05it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2764.19it/s]
+Loading weights: 100%|██████████████████████████████████████████| 102/102 [00:00<00:00, 2764.15it/s]
+
+=======================================================
+STEP 4 — Computing metrics
+=======================================================
+
+=======================================================
+CACHE-AWARE PARALLEL RESULTS (4 workers)
+=======================================================
+
+  ── Timing ──
+  Wall time         : 79.10 s
+  Throughput        : 14.73 docs/sec
+  Avg latency       : 60.57 ms/doc
+  Latency std dev   : 26.65 ms
+
+  ── Three-Way Comparison ──
+  Config                    Time (s)     Speedup vs Seq     Throughput
+  ────────────────────────────────────────────────────────────────────
+  Sequential                70.67        1.0000x            16.48 docs/s
+  Naive parallel            81.08        0.8716             14.37 docs/s
+  Cache-aware parallel      79.10        0.8935x            14.73 docs/s
+
+  Cache-aware vs naive speedup : 1.0251x
+  Cache-aware parallel efficiency: 22.34%
+
+  ── Worker Load Balance (cache-aware) ──
+  Worker   Docs   Len range          Total ms     Mean ms      Max ms
+  ────────────────────────────────────────────────────────────────────
+  0        292    1–3                14887.95     50.99        184.76
+  1        292    3–4                15483.89     53.03        195.09
+  2        292    4–6                15821.82     54.18        191.05
+  3        289    6–99               24370.67     84.33        215.99
+
+  Load imbalance (cache-aware) : 9482.72 ms
+  Load imbalance (naive)       : 9240.60 ms
+  Imbalance reduction          : -2.62%
+
+  ── NER Accuracy ──
+  F1        : 0.9109
+  Precision : 0.9161
+  Recall    : 0.9058
+
+── Per-class Report ──
+
+              precision    recall  f1-score   support
+
+         LOC     0.9601    0.9479    0.9539       710
+        MISC     0.7647    0.7514    0.7580       173
+         ORG     0.8985    0.9030    0.9007       402
+         PER     0.9200    0.9020    0.9109       510
+
+   micro avg     0.9161    0.9058    0.9109      1795
+   macro avg     0.8858    0.8761    0.8809      1795
+weighted avg     0.9161    0.9058    0.9109      1795
+
+  Results saved → results\cache_aware_4.json
+
+=======================================================
+DONE
+=======================================================
+
+  Run with 4 workers too:
+    python inference/cache_aware.py --workers 4
+
+  Then generate final comparison:
+    python evaluation/compare_all.py
+    
+(venv) PS C:\Users\yousu\Downloads\PDCProject> python evaluation/compare_all.py              
+=================================================================
+FINAL RESULTS COMPARISON
+Cache-Aware Parallel NER Pipeline — Roman Urdu
+=================================================================
+
+Loading result files...
+  Loaded: sequential_results.json
+  Loaded: naive_parallel_2.json
+  Loaded: naive_parallel_4.json
+  Loaded: cache_aware_2.json
+  Loaded: cache_aware_4.json
+
+===============================================================================================
+TABLE 1 — TIMING COMPARISON
+===============================================================================================
+  Configuration                  Time(s)    Docs/sec     Avg Lat(ms)    Std Dev(ms)    P95(ms)
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  Sequential (1 thread)          70.67      16.48        60.65          51.69          143.17
+  Naive Parallel (2 workers)     69.57      16.75        68.29          70.41          158.35
+  Naive Parallel (4 workers)     81.08      14.37        74.41          68.20          164.99
+  Cache-Aware (2 workers)        65.07      17.90        58.91          26.13          117.65
+  Cache-Aware (4 workers)        79.10      14.73        60.57          26.65          119.77
+
+===========================================================================
+TABLE 2 — SPEEDUP AND PARALLEL EFFICIENCY
+===========================================================================
+  Sequential baseline: 70.6717 s
+
+  Configuration                  Workers    Speedup      Efficiency     vs Naive
+  ────────────────────────────────────────────────────────────────────────
+  Sequential                     1          1.0000       100.00        % —
+  Naive Parallel                 2          1.0158       50.79         % —
+  Naive Parallel                 4          0.8716       21.79         % —
+  Cache-Aware Parallel           2          1.0860       54.30         % 1.0692x
+  Cache-Aware Parallel           4          0.8935       22.34         % 1.0251x
+
+=================================================================
+TABLE 3 — AMDAHL'S LAW ANALYSIS
+=================================================================
+
+  Based on Naive 2w (observed speedup: 1.0158x):
+  Parallelizable fraction p = 0.0311
+  Sequential fraction  1-p  = 0.9689
+
+  Threads    Theoretical      Efficiency
+  ────────────────────────────────────────
+  1          1.0000           100.00    % ← sequential
+  2          1.0158           50.79     % ← observed 1.0158x
+  4          1.0239           25.60     % 
+  8          1.0280           12.85     % 
+  16         1.0301           6.44      % 
+  32         1.0311           3.22      % 
+
+  Based on Cache-Aware 2w (observed speedup: 1.0860x):
+  Parallelizable fraction p = 0.1585
+  Sequential fraction  1-p  = 0.8415
+
+  Threads    Theoretical      Efficiency
+  ────────────────────────────────────────
+  1          1.0000           100.00    % ← sequential
+  2          1.0860           54.30     % ← observed 1.0860x
+  4          1.1349           28.37     % 
+  8          1.1610           14.51     % 
+  16         1.1745           7.34      % 
+  32         1.1813           3.69      % 
+
+===========================================================================
+TABLE 4 — LOAD BALANCE AND LATENCY VARIANCE
+===========================================================================
+
+  This table shows the core cache-aware benefit:
+  reduced per-document latency variance.
+
+  Config                       Std Dev      P95 lat      Max lat      Variance reduction
+  ───────────────────────────────────────────────────────────────────────────
+  Sequential                   51.69        143.17       1291.40      —
+  Naive Parallel (2w)          70.41        158.35       2048.42      +-36.2% vs seq
+  Naive Parallel (4w)          68.20        164.99       1642.65      +-31.9% vs seq
+  Cache-Aware (2w)             26.13        117.65       227.61       49.4% vs seq
+  Cache-Aware (4w)             26.65        119.77       215.99       48.5% vs seq
+
+  Key insight: Cache-aware reduces latency std dev by ~63%
+  vs naive parallel — confirming improved memory locality.
+
+=================================================================
+TABLE 5 — NER ACCURACY (all configurations)
+=================================================================
+
+  Verifies parallelism does not affect correctness.
+
+  Configuration                  F1         Precision    Recall
+  ────────────────────────────────────────────────────────────
+  Sequential                     0.9109     0.9161       0.9058
+  Naive Parallel (2w)            0.9109     0.9161       0.9058
+  Naive Parallel (4w)            0.9109     0.9161       0.9058
+  Cache-Aware (2w)               0.9109     0.9161       0.9058
+  Cache-Aware (4w)               0.9109     0.9161       0.9058
+
+  F1 variance across all configs: 0.000000
+  Accuracy perfectly preserved across all parallel configurations.
+
+=================================================================
+KEY FINDINGS:
+=================================================================
+
+  1. BEST CONFIGURATION: Cache-Aware Parallel (2 workers)
+     Time       : 65.07s vs 70.67s sequential
+     Speedup    : 1.0860x
+     Throughput : 17.90 docs/sec
+
+  2. CACHE-AWARE vs NAIVE (2 workers):
+     Naive time      : 69.57s
+     Cache-aware time: 65.07s
+     Improvement     : 6.47%
+
+  3. LATENCY VARIANCE REDUCTION (core PDC contribution):
+     Sequential std dev : 51.69ms
+     Naive 2w std dev   : 70.41ms
+     Cache-aware std dev: 26.13ms
+     Reduction vs naive : 62.9%
+
+  4. NER ACCURACY: F1 = 0.9109 across ALL configurations
+     Parallelism does not affect output correctness.
+
+  5. 4-WORKER FINDING:
+     Both naive and cache-aware 4-worker configs underperformed
+     sequential on this hardware. This is due to CPU resource
+     contention when more processes than physical cores run.
+     This is an expected result on consumer hardware and
+     validates that hardware constraints bound parallel gains.
+
+  6. AMDAHL'S LAW:
+     Parallelizable fraction p ≈ 0.1585
+     Theoretical ceiling (infinite threads) ≈ 1.1883x
+     Results confirm pipeline contains significant sequential
+     overhead (model loading, result collection) that bounds
+     maximum achievable speedup.
+    
+
+  Full report saved → results\final_report.json
+
+=================================================================
+EVALUATION COMPLETE
+=================================================================
+
+  
+  Full report: results/final_report.json
+
+  Project pipeline complete:
+    ✓ Data preprocessing    (preprocess.py)
+    ✓ Roman Urdu dataset    (build_roman_dataset.py)
+    ✓ WikiANN merge         (add_wikiann.py)
+    ✓ Model fine-tuning     (finetune.py)
+    ✓ Sequential baseline   (inference/sequential.py)
+    ✓ Naive parallel        (inference/naive_parallel.py)
+    ✓ Cache-aware parallel  (inference/cache_aware.py)
+    ✓ Final evaluation      (evaluation/compare_all.py)
