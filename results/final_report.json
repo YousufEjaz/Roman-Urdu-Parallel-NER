@@ -1,0 +1,48 @@
+{
+  "project": "Cache-Aware Parallel NER Pipeline for Roman Urdu",
+  "model": "distilbert-base-multilingual-cased",
+  "dataset": "UNER + WikiANN (Roman Urdu transliterated)",
+  "test_sentences": 1165,
+  "ner_accuracy": {
+    "f1": 0.9109,
+    "precision": 0.9161,
+    "recall": 0.9058
+  },
+  "timing_comparison": {
+    "sequential": {
+      "time_s": 70.6717,
+      "throughput": 16.4847,
+      "latency_std": 51.6931
+    },
+    "naive_2w": {
+      "time_s": 69.5721,
+      "throughput": 16.7452,
+      "speedup": 1.0158,
+      "efficiency": 50.79,
+      "latency_std": 70.4108
+    },
+    "naive_4w": {
+      "time_s": 81.0847,
+      "throughput": 14.3677,
+      "speedup": 0.8716,
+      "efficiency": 21.79,
+      "latency_std": 68.2006
+    },
+    "cache_aware_2w": {
+      "time_s": 65.0723,
+      "throughput": 17.9032,
+      "speedup": 1.086,
+      "efficiency": 54.3,
+      "latency_std": 26.1312,
+      "speedup_vs_naive": 1.0692
+    },
+    "cache_aware_4w": {
+      "time_s": 79.097,
+      "throughput": 14.7288,
+      "speedup": 0.8935,
+      "efficiency": 22.34,
+      "latency_std": 26.6466,
+      "speedup_vs_naive": 1.0251
+    }
+  }
+}

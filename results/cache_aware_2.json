@@ -1,0 +1,62 @@
+{
+  "config": "cache_aware_parallel",
+  "num_workers": 2,
+  "timing": {
+    "wall_time_s": 65.0723,
+    "num_documents": 1165,
+    "throughput_docs_s": 17.9032,
+    "latency_mean_ms": 58.9138,
+    "latency_median_ms": 51.6005,
+    "latency_std_ms": 26.1312,
+    "latency_p95_ms": 117.6549
+  },
+  "speedup_vs_sequential": 1.086,
+  "speedup_vs_naive": 1.0692,
+  "parallel_efficiency": 54.3,
+  "worker_stats": [
+    {
+      "worker_id": 0,
+      "num_docs": 583,
+      "doc_len_min": 1,
+      "doc_len_max": 4,
+      "doc_len_mean": 3.2,
+      "total_time_ms": 29284.93,
+      "mean_lat_ms": 50.23,
+      "max_lat_ms": 143.53
+    },
+    {
+      "worker_id": 1,
+      "num_docs": 582,
+      "doc_len_min": 4,
+      "doc_len_max": 99,
+      "doc_len_mean": 12.8,
+      "total_time_ms": 39349.6,
+      "mean_lat_ms": 67.61,
+      "max_lat_ms": 227.61
+    }
+  ],
+  "length_ranges": [
+    {
+      "worker": 0,
+      "min_len": 1,
+      "max_len": 4,
+      "mean_len": 3.2,
+      "num_docs": 583
+    },
+    {
+      "worker": 1,
+      "min_len": 4,
+      "max_len": 99,
+      "mean_len": 12.8,
+      "num_docs": 582
+    }
+  ],
+  "ner_metrics": {
+    "f1": 0.9109,
+    "precision": 0.9161,
+    "recall": 0.9058,
+    "report": "              precision    recall  f1-score   support\n\n         LOC     0.9601    0.9479    0.9539       710\n        MISC     0.7647    0.7514    0.7580       173\n         ORG     0.8985    0.9030    0.9007       402\n         PER     0.9200    0.9020    0.9109       510\n\n   micro avg     0.9161    0.9058    0.9109      1795\n   macro avg     0.8858    0.8761    0.8809      1795\nweighted avg     0.9161    0.9058    0.9109      1795\n"
+  },
+  "baseline_time_s": 70.6717,
+  "naive_time_s": 69.5721
+}

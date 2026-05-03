@@ -1,0 +1,24 @@
+{
+  "config": "sequential",
+  "num_threads": 1,
+  "timing": {
+    "total_time_s": 70.6717,
+    "num_documents": 1165,
+    "throughput_docs_s": 16.4847,
+    "latency_mean_ms": 60.6531,
+    "latency_median_ms": 46.8877,
+    "latency_std_ms": 51.6931,
+    "latency_min_ms": 32.2256,
+    "latency_max_ms": 1291.4027,
+    "latency_p95_ms": 143.1658,
+    "latency_p99_ms": 230.4665
+  },
+  "memory_before_mb": 456.52,
+  "memory_after_mb": 652.76,
+  "ner_metrics": {
+    "f1": 0.9109,
+    "precision": 0.9161,
+    "recall": 0.9058,
+    "report": "              precision    recall  f1-score   support\n\n         LOC     0.9601    0.9479    0.9539       710\n        MISC     0.7647    0.7514    0.7580       173\n         ORG     0.8985    0.9030    0.9007       402\n         PER     0.9200    0.9020    0.9109       510\n\n   micro avg     0.9161    0.9058    0.9109      1795\n   macro avg     0.8858    0.8761    0.8809      1795\nweighted avg     0.9161    0.9058    0.9109      1795\n"
+  }
+}

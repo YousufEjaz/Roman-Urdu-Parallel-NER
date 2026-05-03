@@ -1,0 +1,96 @@
+{
+  "config": "cache_aware_parallel",
+  "num_workers": 4,
+  "timing": {
+    "wall_time_s": 79.097,
+    "num_documents": 1165,
+    "throughput_docs_s": 14.7288,
+    "latency_mean_ms": 60.5702,
+    "latency_median_ms": 53.1472,
+    "latency_std_ms": 26.6466,
+    "latency_p95_ms": 119.7708
+  },
+  "speedup_vs_sequential": 0.8935,
+  "speedup_vs_naive": 1.0251,
+  "parallel_efficiency": 22.34,
+  "worker_stats": [
+    {
+      "worker_id": 0,
+      "num_docs": 292,
+      "doc_len_min": 1,
+      "doc_len_max": 3,
+      "doc_len_mean": 2.8,
+      "total_time_ms": 14887.95,
+      "mean_lat_ms": 50.99,
+      "max_lat_ms": 184.76
+    },
+    {
+      "worker_id": 1,
+      "num_docs": 292,
+      "doc_len_min": 3,
+      "doc_len_max": 4,
+      "doc_len_mean": 3.7,
+      "total_time_ms": 15483.89,
+      "mean_lat_ms": 53.03,
+      "max_lat_ms": 195.09
+    },
+    {
+      "worker_id": 2,
+      "num_docs": 292,
+      "doc_len_min": 4,
+      "doc_len_max": 6,
+      "doc_len_mean": 4.5,
+      "total_time_ms": 15821.82,
+      "mean_lat_ms": 54.18,
+      "max_lat_ms": 191.05
+    },
+    {
+      "worker_id": 3,
+      "num_docs": 289,
+      "doc_len_min": 6,
+      "doc_len_max": 99,
+      "doc_len_mean": 21.1,
+      "total_time_ms": 24370.67,
+      "mean_lat_ms": 84.33,
+      "max_lat_ms": 215.99
+    }
+  ],
+  "length_ranges": [
+    {
+      "worker": 0,
+      "min_len": 1,
+      "max_len": 3,
+      "mean_len": 2.8,
+      "num_docs": 292
+    },
+    {
+      "worker": 1,
+      "min_len": 3,
+      "max_len": 4,
+      "mean_len": 3.7,
+      "num_docs": 292
+    },
+    {
+      "worker": 2,
+      "min_len": 4,
+      "max_len": 6,
+      "mean_len": 4.5,
+      "num_docs": 292
+    },
+    {
+      "worker": 3,
+      "min_len": 6,
+      "max_len": 99,
+      "mean_len": 21.1,
+      "num_docs": 289
+    }
+  ],
+  "ner_metrics": {
+    "f1": 0.9109,
+    "precision": 0.9161,
+    "recall": 0.9058,
+    "report": "              precision    recall  f1-score   support\n\n         LOC     0.9601    0.9479    0.9539       710\n        MISC     0.7647    0.7514    0.7580       173\n         ORG     0.8985    0.9030    0.9007       402\n         PER     0.9200    0.9020    0.9109       510\n\n   micro avg     0.9161    0.9058    0.9109      1795\n   macro avg     0.8858    0.8761    0.8809      1795\nweighted avg     0.9161    0.9058    0.9109      1795\n"
+  },
+  "baseline_time_s": 70.6717,
+  "naive_time_s": 81.0847
+}

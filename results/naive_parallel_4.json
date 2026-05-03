@@ -1,0 +1,52 @@
+{
+  "config": "naive_parallel",
+  "num_workers": 4,
+  "timing": {
+    "wall_time_s": 81.0847,
+    "num_documents": 1165,
+    "throughput_docs_s": 14.3677,
+    "latency_mean_ms": 74.4133,
+    "latency_median_ms": 58.7368,
+    "latency_std_ms": 68.2006,
+    "latency_p95_ms": 164.9938
+  },
+  "speedup": 0.8716,
+  "parallel_efficiency": 21.79,
+  "worker_stats": [
+    {
+      "worker_id": 0,
+      "num_docs": 292,
+      "total_time_ms": 25511.57,
+      "mean_lat_ms": 87.37,
+      "max_lat_ms": 1642.65
+    },
+    {
+      "worker_id": 1,
+      "num_docs": 292,
+      "total_time_ms": 23674.98,
+      "mean_lat_ms": 81.08,
+      "max_lat_ms": 475.15
+    },
+    {
+      "worker_id": 2,
+      "num_docs": 292,
+      "total_time_ms": 21233.94,
+      "mean_lat_ms": 72.72,
+      "max_lat_ms": 574.05
+    },
+    {
+      "worker_id": 3,
+      "num_docs": 289,
+      "total_time_ms": 16270.97,
+      "mean_lat_ms": 56.3,
+      "max_lat_ms": 277.79
+    }
+  ],
+  "ner_metrics": {
+    "f1": 0.9109,
+    "precision": 0.9161,
+    "recall": 0.9058,
+    "report": "              precision    recall  f1-score   support\n\n         LOC     0.9601    0.9479    0.9539       710\n        MISC     0.7647    0.7514    0.7580       173\n         ORG     0.8985    0.9030    0.9007       402\n         PER     0.9200    0.9020    0.9109       510\n\n   micro avg     0.9161    0.9058    0.9109      1795\n   macro avg     0.8858    0.8761    0.8809      1795\nweighted avg     0.9161    0.9058    0.9109      1795\n"
+  },
+  "baseline_time_s": 70.6717
+}
