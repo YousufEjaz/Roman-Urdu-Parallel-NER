@@ -1,0 +1,238 @@
+{
+  "entity_dictionary_gaps": [
+    {
+      "word": "شپ",
+      "count": 1019,
+      "suggested_roman": "shp"
+    },
+    {
+      "word": "نیو",
+      "count": 470,
+      "suggested_roman": "nioo"
+    },
+    {
+      "word": "علیہ",
+      "count": 368,
+      "suggested_roman": "liha"
+    },
+    {
+      "word": "شمالی",
+      "count": 316,
+      "suggested_roman": "shmali"
+    },
+    {
+      "word": "فہرست",
+      "count": 306,
+      "suggested_roman": "fhrst"
+    },
+    {
+      "word": "گن",
+      "count": 248,
+      "suggested_roman": "gn"
+    },
+    {
+      "word": "مشی",
+      "count": 246,
+      "suggested_roman": "mshi"
+    },
+    {
+      "word": "آف",
+      "count": 243,
+      "suggested_roman": "aaf"
+    },
+    {
+      "word": "مسلم",
+      "count": 189,
+      "suggested_roman": "mslm"
+    },
+    {
+      "word": "برائے",
+      "count": 181,
+      "suggested_roman": "braye"
+    },
+    {
+      "word": "یارک",
+      "count": 169,
+      "suggested_roman": "iark"
+    },
+    {
+      "word": "ہالٹ",
+      "count": 167,
+      "suggested_roman": "halt"
+    },
+    {
+      "word": "سینٹ",
+      "count": 163,
+      "suggested_roman": "sint"
+    },
+    {
+      "word": "جمہوریہ",
+      "count": 158,
+      "suggested_roman": "jmhooriha"
+    },
+    {
+      "word": "مغربی",
+      "count": 157,
+      "suggested_roman": "mghrbi"
+    },
+    {
+      "word": "آل",
+      "count": 157,
+      "suggested_roman": "aal"
+    },
+    {
+      "word": "آبشار",
+      "count": 153,
+      "suggested_roman": "aabshar"
+    },
+    {
+      "word": "بین",
+      "count": 153,
+      "suggested_roman": "bin"
+    },
+    {
+      "word": "آر",
+      "count": 151,
+      "suggested_roman": "aar"
+    },
+    {
+      "word": "اداکارہ",
+      "count": 150,
+      "suggested_roman": "adakarha"
+    },
+    {
+      "word": "عالمی",
+      "count": 147,
+      "suggested_roman": "almi"
+    },
+    {
+      "word": "قبرص",
+      "count": 146,
+      "suggested_roman": "qbrs"
+    },
+    {
+      "word": "سلطان",
+      "count": 143,
+      "suggested_roman": "sltan"
+    },
+    {
+      "word": "الاقوامی",
+      "count": 142,
+      "suggested_roman": "alaqooami"
+    },
+    {
+      "word": "صلی",
+      "count": 141,
+      "suggested_roman": "sli"
+    },
+    {
+      "word": "سلم",
+      "count": 141,
+      "suggested_roman": "slm"
+    },
+    {
+      "word": "ابراہیم",
+      "count": 141,
+      "suggested_roman": "abrahim"
+    },
+    {
+      "word": "آلہ",
+      "count": 140,
+      "suggested_roman": "aalha"
+    },
+    {
+      "word": "لیک",
+      "count": 134,
+      "suggested_roman": "lik"
+    },
+    {
+      "word": "یونین",
+      "count": 132,
+      "suggested_roman": "ioonin"
+    },
+    {
+      "word": "پور",
+      "count": 131,
+      "suggested_roman": "poor"
+    },
+    {
+      "word": "جنکشن",
+      "count": 126,
+      "suggested_roman": "jnkshn"
+    },
+    {
+      "word": "ابی",
+      "count": 125,
+      "suggested_roman": "abi"
+    },
+    {
+      "word": "این",
+      "count": 124,
+      "suggested_roman": "een"
+    },
+    {
+      "word": "ایئر",
+      "count": 118,
+      "suggested_roman": "eeyr"
+    },
+    {
+      "word": "اول",
+      "count": 112,
+      "suggested_roman": "ool"
+    },
+    {
+      "word": "لا",
+      "count": 109,
+      "suggested_roman": "la"
+    },
+    {
+      "word": "جارج",
+      "count": 105,
+      "suggested_roman": "jarj"
+    },
+    {
+      "word": "شہید",
+      "count": 104,
+      "suggested_roman": "shhid"
+    },
+    {
+      "word": "آبادی",
+      "count": 103,
+      "suggested_roman": "aabadi"
+    }
+  ],
+  "true_unresolved_entities": [
+    {
+      "word": "قرۃ",
+      "count": 9
+    },
+    {
+      "word": "ندوۃ",
+      "count": 4
+    },
+    {
+      "word": "٢ند",
+      "count": 1
+    },
+    {
+      "word": "ٹاؤؑن",
+      "count": 1
+    },
+    {
+      "word": "ساۓرئکس",
+      "count": 1
+    },
+    {
+      "word": "١ثت",
+      "count": 1
+    },
+    {
+      "word": "الدعوۃ",
+      "count": 1
+    },
+    {
+      "word": "الاسلامیۃ",
+      "count": 1
+    }
+  ]
+}
